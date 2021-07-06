@@ -3,16 +3,15 @@ provider "kubernetes" {
 }
 
 locals {
-  application_namespaces   = ["frontend", "backend", "database"]
+  app_namespaces           =  "apps"
 }
 
-resource "kubernetes_namespace" "1-minikube-namespace" {
-  for_each = toset(local.application_namespaces)
+resource "kubernetes_namespace" "app_ns" {
   metadata {
     labels = {
-      name = each.value
+      name = locals.app_namespace
     }
-    name = each.value
+    name = locals.app_namespace
   }
 }
 
