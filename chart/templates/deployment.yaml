@@ -33,20 +33,36 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+          {{- if .Values.secrets }}
+          - secretRef:
+              name: {{ include "chart.fullname" . }}-secret
+          {{- end }}
+          {{- if .Values.configs }}
+          - configMapRef:
+              name: {{ include "chart.fullname" . }}-configmap
+          {{- end }}          
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.service.targetPort | default "80" }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.service.targetPort | default "80" }}
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: {{ .Values.service.targetPort | default "80" }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.volume }}
+          {{- if .Values.volume.mountPath }}
+          volumeMounts:
+          - mountPath: {{ .Values.volume.mountPath }}
+            name: {{ include "chart.fullname" . }}-data
+          {{- end }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -58,4 +74,17 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.volume }}
+      {{- if .Values.volume.enabled }}
+      volumes:
+        {{- if not .Values.volume.persistence.enabled }}
+        - name: {{ include "chart.fullname" . }}-data
+          emptyDir: {}
+        {{- else if .Values.volume.persistence.existingClaim }}
+        - name: {{ include "chart.fullname" . }}--data
+          persistentVolumeClaim:
+            claimName: {{ printf "%s" (tpl .Values.volume.persistence.existingClaim .) }}
+        {{- end }}
+      {{- end }}
       {{- end }}
