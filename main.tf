@@ -76,6 +76,15 @@ ENDYAML
 
 }
 
+resource "kubernetes_namespace" "app_ns" {
+  metadata {
+    labels = {
+      name = local.app_namespace
+    }
+    name = local.app_namespace
+  }
+}
+
 resource "helm_release" "redisapp" {
   name       = "redis"
   chart      = "./chart"
@@ -103,8 +112,8 @@ resource "helm_release" "votingapp" {
   ]
 }
 
-resource "helm_release" "workingapp" {
-  name          = "working-app"
+resource "helm_release" "resultapp" {
+  name          = "result-app"
   chart         = "./chart"
   namespace     = local.app_namespace
   values        = [

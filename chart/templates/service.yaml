@@ -12,7 +12,7 @@ spec:
       protocol: TCP
       name: {{ include "chart.fullname" . }}-port
       {{- if .Values.service.nodePort }}
-      nodePort: .Values.service.nodePort
+      nodePort: {{ .Values.service.nodePort }}
       {{- end }}
   selector:
     {{- include "chart.selectorLabels" . | nindent 4 }}

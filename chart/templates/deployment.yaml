@@ -46,14 +46,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.targetPort | default "80" }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.targetPort | default "80" }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.service.targetPort | default "80" }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.volume }}
