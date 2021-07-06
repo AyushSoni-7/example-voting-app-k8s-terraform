@@ -46,5 +46,5 @@ To get the url of front-end applications. Run:
 copy the url of result-app and voting app and then paste the same on local browser.
 
 ## Testing Application
-voting app has 2 votes cats/dogs. Select anyone of then the result app will show the percentage of votes cast.
-As this is a local deploymeny with single user. Only one vote can be cast. So the result app will show the result based on single vote cast.
+The voting app has two votes : 1.cats 2.dogs.
+When any one of the above is selected, the result app will show the percentage of votes cast. As this is a local deployment with single user. Only one vote can be cast. So the result app will show the result based on single vote cast.
