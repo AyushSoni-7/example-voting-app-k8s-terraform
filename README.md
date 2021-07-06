@@ -4,16 +4,16 @@ This repository contains the code to deploy [example voting app](https://github.
 
 ## Pre-requisite
 - Docker
-  - curl -fsSL https://get.docker.com -o get-docker.sh
-  - sudo sh get-docker.sh
+  - `curl -fsSL https://get.docker.com -o get-docker.sh`
+  - `sudo sh get-docker.sh`
 - minikube and ingress
   - Install minikube
-    - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    - sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    - `curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
+    - `sudo install minikube-linux-amd64 /usr/local/bin/minikube`
   - Start minikube
-    - minikube start
+    - `minikube start`
   - Install ingress on minikube
-    - minikube addons enable ingress
+    - `minikube addons enable ingress`
 
 ## Application Architecture
 This is an simple distributed application running across multiple containers:
@@ -30,9 +30,10 @@ This is an simple distributed application running across multiple containers:
 There are two front-end applications which are deployed in minikube cluster. These application have nodePort svc which is accessible by local minikube cluster.
 To get the url of front-end applications. Run:
 - `minikube service list`
-|-------------|------------------------------------|----------------------|---------------------------|
+
+
 |  NAMESPACE  |                NAME                |     TARGET PORT      |            URL            |
-|-------------|------------------------------------|----------------------|---------------------------|
+| :---------: | :--------------------------------: | :------------------: | :-----------------------: |
 | apps        | db                                 | No node port         |
 | apps        | redis                              | No node port         |
 | apps        | result-app                         | result-app-port/5001 | http://192.168.49.2:31001 |
@@ -40,7 +41,7 @@ To get the url of front-end applications. Run:
 | default     | kubernetes                         | No node port         |
 | kube-system | ingress-nginx-controller-admission | No node port         |
 | kube-system | kube-dns                           | No node port         |
-|-------------|------------------------------------|----------------------|---------------------------|
+
 
 copy the url of result-app and voting app and then paste the same on local browser.
 
