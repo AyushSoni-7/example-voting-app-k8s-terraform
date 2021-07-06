@@ -1,0 +1,15 @@
+image:
+  repository: dockersamples/examplevotingapp_vote
+  tag: "latest"
+service:
+  port: 5000
+  nodePort: 31000
+  type: NodePort
+ingress:
+  enabled: true
+  hosts:
+    - host: votingapp.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+

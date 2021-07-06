@@ -1,0 +1,19 @@
+image:
+  repository: postgres
+  tag: "9.4"
+service:
+  targetPort: 5432
+  port: 5432
+  type: ClusterIP
+ingress:
+  enabled: false
+configs:
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_HOST_AUTH_METHOD: trust
+volume:
+  enabled: true
+  persistence:
+    enables: false
+  mountPath: /var/lib/postgresql/data
+

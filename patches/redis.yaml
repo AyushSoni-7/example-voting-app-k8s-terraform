@@ -1,0 +1,15 @@
+image:
+  repository: redis
+  tag: "latest"
+service:
+  targetPort: 6379
+  port: 6379
+  type: ClusterIP
+ingress:
+  enabled: false
+volume:
+  enabled: true
+  persistence:
+    enables: false
+  mountPath: /data
+
