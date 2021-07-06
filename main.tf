@@ -12,8 +12,9 @@ service:
 ingress:
   enabled: false
 configs:
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_HOST_AUTH_METHOD: trust
 volume:
   enabled: true
   persistence:
@@ -25,7 +26,7 @@ ENDYAML
   redis_values = <<ENDYAML
 image:
   repository: redis
-  tag: "alpine"
+  tag: "latest"
 service:
   targetPort: 6379
   port: 6379
@@ -43,7 +44,7 @@ ENDYAML
   voting_app_values = <<ENDYAML
 image:
   repository: dockersamples/examplevotingapp_vote
-  tag: "before"
+  tag: "latest"
 service:
   port: 5000
   nodePort: 31000
@@ -60,7 +61,7 @@ ENDYAML
   result_app_values = <<ENDYAML
 image:
   repository: dockersamples/examplevotingapp_result
-  tag: "before"
+  tag: "latest"
 service:
   port: 5001
   nodePort: 31001
@@ -151,5 +152,4 @@ resource "kubernetes_deployment" "worker" {
     }
   }
 }
-
 
